@@ -29,11 +29,7 @@
             if (!$login->login())
                 $login_error = $login->get_error ();
             else
-            {
-                echo "Login successful, username is ".$login->get_username()." //";
-                exit();
                 login($login->get_username());
-            }
         }
     }
     
