@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.php">Slate</a>
@@ -17,13 +17,19 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="#">
-                                <span class="glyphicon glyphicon-cog"></span>&nbsp;
+                            <a role="menuitem" tabindex="-1" href="dashboard.php">
+                                <span class="glyphicon glyphicon-dashboard"></span>&nbsp;
+                                Dashboard
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="profile.php">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
                                 Profile
                             </a>
                         </li>
                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="#">
+                            <a role="menuitem" tabindex="-1" href="logout.php">
                                 <span class="glyphicon glyphicon-log-out"></span>&nbsp;
                                 Logout
                             </a>
