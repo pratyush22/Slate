@@ -40,7 +40,7 @@
         header("Location: ./dashboard.php");
         exit();
     }
-?>
+?>-->
 
 <!DOCTYPE html>
 <html>
@@ -48,10 +48,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Slate</title>
-        <link rel="stylesheet" href="./css/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./css/stylesheet_1.css">
-        <script src="/js/jquery.js"></script>
-        <script src="./css/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="stylesheet_1.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
     </head>
     <body>
         <!--
@@ -86,12 +86,13 @@
         <main class="container">
             <div class="jumbotron custom-jumbotron">
                 <div class="pull-left col-sm-4">
-                    <h2>Express yourself</h2>
+                  <!--  <h2>Express yourself</h2>
                     <p>
                         Share your views by writing posts. Express
                         yourself through images. Discuss and clarify your doubts.
-                    </p>
-                </div>
+                    </p>-->
+                <img class="img-responsive nut " src="images/logo.png" align="middle">
+				</div>
                 
                 <!-- Signup form -->
                 <div class="pull-right col-sm-4">
@@ -121,7 +122,16 @@
                 <div class="clearfix"></div>
             </div>
         </main>
-        
+        <ul id="navigation">
+ <li class="home"><a title="Home"></a></li>
+ <li class="about"><a title="About"></a></li>
+ <li class="search"><a title="Search"></a></li>
+ <li class="photos"><a title="Photos"></a></li>
+ <li class="rssfeed"><a title="Rss Feed"></a></li>
+ <li class="twitter"><a title="Twitter"></a></li>
+ <li class="contact"><a title="Contact"></a></li>
+</ul>
         <?php include "footer.php"; ?>
     </body>
 </html>
+
