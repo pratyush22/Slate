@@ -18,7 +18,7 @@
             if (!$signup->signup())
                 $signup_error = $signup->get_error();
             else
-                login($signup->get_username());
+                login($signup->get_username(), $signup->get_name());
         }
         else if ($_POST["action"] == "login")
         {
@@ -29,13 +29,14 @@
             if (!$login->login())
                 $login_error = $login->get_error ();
             else
-                login($login->get_username());
+                login($login->get_username(), $login->get_name());
         }
     }
     
-    function login($username)
+    function login($username, $name)
     {
         $_SESSION["username"] = $username;
+        $_SESSION["name"] = $name;
         session_write_close();
         header("Location: ./dashboard.php");
         exit();

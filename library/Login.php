@@ -11,6 +11,7 @@
         private $password;
         private $error;
         private $username;
+        private $name;
         
         function __construct()
         {
@@ -18,6 +19,7 @@
             $this->password = "";
             $this->error = "";
             $this->username = "";
+            $this->name = "";
         }
         
         /**
@@ -59,6 +61,17 @@
         }
         
         /**
+         * This function returns the name of the user if login
+         * operation is successful otherwise an empty string will
+         * be returned.
+         * @return string
+         */
+        public function get_name()
+        {
+            return $this->name;
+        }
+        
+        /**
          * This function whether login attempt is successful or not.
          * @return boolean
          */
@@ -70,7 +83,7 @@
             {
                 $db_object = new DatabaseConnection();
                 $connection = $db_object->get_connection();
-                $query = "SELECT username FROM user WHERE email=:email AND password=:password";
+                $query = "SELECT username, name FROM user WHERE email=:email AND password=:password";
                 $statement = $connection->prepare($query);
                 $statement->bindParam(":email", $this->email);
                 $statement->bindParam(":password", $this->password);
@@ -78,7 +91,10 @@
                 if ($statement->execute())
                 {
                     if ($row = $statement->fetch(PDO::FETCH_ASSOC))
+                    {
                         $this->username = $row['username'];
+                        $this->name = $row['name'];
+                    }
                     else
                     {
                         $login = false;

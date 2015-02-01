@@ -1,6 +1,6 @@
 <?php
     include "./library/security.php";
-    $username = $_SESSION["username"];
+    $name = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html>

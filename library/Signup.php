@@ -82,6 +82,15 @@
         }
         
         /**
+         * This function returns the name of the user.
+         * @return string
+         */
+        public function get_name()
+        {
+            return $this->name;
+        }
+        
+        /**
          * This function trims extra spaces around the
          * input and removes slashes from it, if any.
          */

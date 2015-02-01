@@ -1,5 +1,6 @@
 <?php
     include "library/security.php";
+    $name = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html>
