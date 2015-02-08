@@ -65,18 +65,18 @@
          * This function is used to set the person details
          * from the database.
          */
-        public function set_details_from_database();
+        abstract protected function set_details_from_database();
         
         /*
          * This function is used for changing the person's
          * password.
          */
-        public function change_password($new_password);
+        abstract protected function change_password($new_password);
         
         /**
          * This function is used for saving the changes to
          * the database.
          */
-        public function save_changes();
+        abstract protected function save_changes();
     }
 ?>
