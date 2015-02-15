@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo $name;?>&nbsp;
+                        <?php echo $_SESSION["name"];?>&nbsp;
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">

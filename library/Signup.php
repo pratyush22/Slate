@@ -15,6 +15,7 @@
         private $password;
         private $confirm_password;
         private $error;
+        private $initial_image;
         
         function __construct()
         {
@@ -23,6 +24,7 @@
             $this->password = "";
             $this->confirm_password = "";
             $this->error = "";
+            $this->initial_image = "images/Icon-user.png";
         }
         
         /**
@@ -98,7 +100,7 @@
         {
             $this->name = trim($this->name);
             $this->name = stripslashes($this->name);
-            $this->email = trim($this->name);
+            $this->email = trim($this->email);
         }
         
         /**
@@ -167,11 +169,12 @@
                 $connection = $db_object->get_connection();
 
                 //  Insert basic details
-                $query = "INSERT INTO user(name, email, password) VALUES(:name, :email, :password)";
+                $query = "INSERT INTO user(name, email, password, image) VALUES(:name, :email, :password, :image)";
                 $statement = $connection->prepare($query);
                 $statement->bindParam(":name", $this->name);
                 $statement->bindParam(":email", $this->email);
                 $statement->bindParam(":password", $this->password);
+                $statement->bindParam(":image", $this->initial_image);
                 $statement->execute();
                 
                 //  Generate and Insert username

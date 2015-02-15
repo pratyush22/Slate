@@ -1,5 +1,5 @@
 <?php
-    include "./autoload.php";
+    include "autoload.php";
     
     abstract class Person
     {
@@ -7,6 +7,7 @@
         protected $username;
         protected $email;
         protected $password;
+        protected $error;
         
         function __construct()
         {
@@ -14,6 +15,7 @@
             $this->email = "";
             $this->username = "";
             $this->password = "";
+            $this->error = "";
         }
         
         /**
@@ -62,10 +64,20 @@
         }
         
         /**
+         * This function returns the error if any otherwise
+         * an empty string is returned.
+         * @return string
+         */
+        public function get_error()
+        {
+            return $this->error;
+        }
+        
+        /**
          * This function is used to set the person details
          * from the database.
          */
-        abstract protected function set_details_from_database();
+        abstract protected function set_details_from_database($username);
         
         /*
          * This function is used for changing the person's

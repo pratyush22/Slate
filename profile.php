@@ -1,6 +1,9 @@
 <?php
     include "library/security.php";
-    $name = $_SESSION["name"];
+    include "library/autoload.php";
+    
+    $user = new User();
+    $user->set_details_from_database($_SESSION["username"]);
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +23,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <figure>
-                        <img id="user_pic" src="./images/Icon-user.png" width="150" height="150"
+                        <img id="user_pic" src="<?php echo $user->get_image();?>" width="150" height="150"
                              class="img-rounded" alt="Profile pic" />
                         <br />
                         <br />
@@ -45,21 +48,21 @@
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
                               method="post" role="form" id="info">
-                            <span class="text-danger"></span>
+                            <span class="text-danger"><?php echo $user->get_error();?></span>
                             <span class="text-success"><?php?></span>
                             <br />
                             <label>Full Name</label>
                             <input type="text" name="name" required="required"
-                                   class="form-control" value="<?php echo $name?>" />
+                                   class="form-control" value="<?php echo $user->get_name();?>" />
                             <br />
                             <label>Username</label>
                             <input type="text" name="username" required="required"
-                                   class="form-control" value="<?php echo $username?>"
+                                   class="form-control" value="<?php echo $user->get_username();?>"
                                    disabled="disabled" />
                             <br />
                             <label>e-mail</label>
                             <input type="email" name="email" required="required"
-                                   class="form-control" value="<?php echo $email?>"
+                                   class="form-control" value="<?php echo $user->get_email();?>"
                                    disabled="disabled" />
                             <br />
                             <label for="male" class="form-inline">Male</label>&nbsp;
@@ -70,7 +73,7 @@
                                    class="form-inline" value="female" />
                             <br /><br />
                             <label>About me</label>
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control"><?php echo $user->get_about()?></textarea>
                             <br />
                             <input type="hidden" name="action" value="info" />
                             <input type="submit" class="btn btn-success" value="Save" />
