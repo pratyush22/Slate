@@ -2,8 +2,31 @@
     include "library/security.php";
     include "library/autoload.php";
     
+    $success_message = "";
     $user = new User();
     $user->set_details_from_database($_SESSION["username"]);
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        if ($_POST["action"] == "delete")
+        {
+            if ($user->delete_account())
+            {
+                include "logout.php";
+            }
+        }
+        else if ($_POST["action"] == "info")
+        {
+            
+        }
+        else if ($_POST["action"] == "password")
+        {
+            if ($user->change_password($_POST["old_password"], $_POST["new_password"], $_POST["confirm_new_password"]))
+            {
+                $success_message = "Password changed";
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,15 +45,19 @@
         <main class="container">
             <div class="row">
                 <div class="col-sm-4">
+                    
+                    <!-- Image file upload belong to personal information form -->
                     <figure>
                         <img id="user_pic" src="<?php echo $user->get_image();?>" width="150" height="150"
                              class="img-rounded" alt="Profile pic" />
                         <br />
                         <br />
-                        <input id="file_upload" onchange="showImage()" type="file" form="info" />
+                        
+                        <input id="file_upload" name="user_image" onchange="showImage()" type="file" form="info" />
                         <hr />
                     </figure>
                     
+                    <!-- Delete account form -->
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
                               method="post" role="form" onsubmit="return deleteAccount()">
@@ -44,6 +71,7 @@
                 </div>
                 
                 <div class="col-sm-6">
+                    
                     <!-- Personal information form -->
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
@@ -51,20 +79,24 @@
                             <span class="text-danger"><?php echo $user->get_error();?></span>
                             <span class="text-success"><?php?></span>
                             <br />
+                            
                             <label>Full Name</label>
                             <input type="text" name="name" required="required"
                                    class="form-control" value="<?php echo $user->get_name();?>" />
                             <br />
+                            
                             <label>Username</label>
                             <input type="text" name="username" required="required"
                                    class="form-control" value="<?php echo $user->get_username();?>"
                                    disabled="disabled" />
                             <br />
+                            
                             <label>e-mail</label>
                             <input type="email" name="email" required="required"
                                    class="form-control" value="<?php echo $user->get_email();?>"
                                    disabled="disabled" />
                             <br />
+                            
                             <label for="male" class="form-inline">Male</label>&nbsp;
                             <input type="radio" id="male" name="gender" 
                                    class="form-inline" value="male" />&nbsp;&nbsp;
@@ -72,9 +104,11 @@
                             <input type="radio" id="female" name="gender"
                                    class="form-inline" value="female" />
                             <br /><br />
+                            
                             <label>About me</label>
                             <textarea class="form-control"><?php echo $user->get_about()?></textarea>
                             <br />
+                            
                             <input type="hidden" name="action" value="info" />
                             <input type="submit" class="btn btn-success" value="Save" />
                         </form>
@@ -85,21 +119,26 @@
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
                               method="post" role="form">
-                            <span class="text-danger"></span>
-                            <span class="text-success"></span>
+                            <span class="text-danger"><?php echo $user->get_error();?></span>
+                            <span class="text-success"><?php echo $success_message;?></span>
+                            <br />
+                            
                             <label>Old password</label>
                             <input type="password" name="old_password" required="required"
                                    class="form-control" />
                             <br />
+                            
                             <label>New password</label>
                             <input type="password" name="new_password" required="required"
                                    class="form-control" />
                             <br />
+                            
                             <label>Confirm new password</label>
                             <input type="password" name="confirm_new_password" required="required"
                                    class="form-control" />
                             <input type="hidden" name="action" value="password" />
                             <br />
+                            
                             <input type="submit" class="btn btn-success" value="Change password" />
                         </form>
                     </div>

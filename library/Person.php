@@ -83,12 +83,18 @@
          * This function is used for changing the person's
          * password.
          */
-        abstract protected function change_password($new_password);
+        abstract protected function change_password($old_password, $new_password, $confirm_password);
         
         /**
          * This function is used for saving the changes to
          * the database.
          */
         abstract protected function save_changes();
+        
+        /**
+         * This function is used to delete user account.
+         * All details must be set before calling this function.
+         */
+        abstract protected function delete_account();
     }
 ?>
