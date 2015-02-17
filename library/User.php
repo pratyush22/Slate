@@ -193,7 +193,7 @@ class User extends Person
     {
         $saved = false;
         $query = "UPDATE user SET name = :name, username = :username, gender = :gender, "
-                . "about = :about WHERE username = :old_username";
+                . "about = :about, image = :image WHERE username = :old_username";
         
         $old_username = $this->username;
         $this->clean_data();
@@ -209,6 +209,7 @@ class User extends Person
             $statement->bindParam(":username", $this->username);
             $statement->bindParam(":gender", $this->gender);
             $statement->bindParam(":about", $this->about);
+            $statement->bindParam(":image", $this->image);
             $statement->bindParam(":old_username", $old_username);
             $statement->execute();
             
@@ -263,6 +264,17 @@ class User extends Person
         
         try
         {
+            //  Delete the user image from the user's folder
+            if (strcmp($this->image, "images/Icon-user.png"))
+            {
+                if (!unlink($this->image))
+                {
+                    $this->error = "Your account can't be deleted";
+                    return false;
+                }
+            }
+            
+            //  Delete the account from the database
             $db = new DatabaseConnection();
             $connection = $db->get_connection();
             $statement = $connection->prepare($query);
