@@ -2,7 +2,12 @@
     include "library/security.php";
     include "library/autoload.php";
     
-    $success_message = "";
+    $pass_success = "";
+    $pass_error = "";
+    
+    $info_success = "";
+    $info_error = "";
+    
     $user = new User();
     $user->set_details_from_database($_SESSION["username"]);
     
@@ -17,17 +22,54 @@
         }
         else if ($_POST["action"] == "info")
         {
+            $user->set_name($_POST["name"]);
             
+            if (!empty($_POST["gender"]))
+            {
+                $user->set_gender($_POST["gender"]);
+            }
+            
+            if (!empty($_POST["about"]))
+            {
+                $user->set_about($_POST["about"]);
+            }
+            
+            if ($user->save_changes())
+            {
+                $info_success = "Saved";
+            }
+            else
+            {
+                $info_error = $user->get_error();
+            }
         }
         else if ($_POST["action"] == "password")
         {
             if ($user->change_password($_POST["old_password"], $_POST["new_password"], $_POST["confirm_new_password"]))
             {
-                $success_message = "Password changed";
+                $pass_success = "Password changed";
+            }
+            else
+            {
+                $pass_error = $user->get_error();
             }
         }
     }
+    
+    $gender = $user->get_gender();
+    $male = "";
+    $female = "";
+    
+    if (!strcmp($gender, "male"))
+    {
+        $male = "checked";
+    }
+    else if (!strcmp($gender, "female"))
+    {
+        $female = "checked";
+    }
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,8 +118,8 @@
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
                               method="post" role="form" id="info">
-                            <span class="text-danger"><?php echo $user->get_error();?></span>
-                            <span class="text-success"><?php?></span>
+                            <span class="text-danger"><?php echo $info_error;?></span>
+                            <span class="text-success"><?php echo $info_success;?></span>
                             <br />
                             
                             <label>Full Name</label>
@@ -98,15 +140,15 @@
                             <br />
                             
                             <label for="male" class="form-inline">Male</label>&nbsp;
-                            <input type="radio" id="male" name="gender" 
+                            <input type="radio" id="male" name="gender" <?php echo $male;?> 
                                    class="form-inline" value="male" />&nbsp;&nbsp;
                             <label for="female" class="form-inline">Female</label>&nbsp;
-                            <input type="radio" id="female" name="gender"
+                            <input type="radio" id="female" name="gender" <?php echo $female;?>
                                    class="form-inline" value="female" />
                             <br /><br />
                             
                             <label>About me</label>
-                            <textarea class="form-control"><?php echo $user->get_about()?></textarea>
+                            <textarea name="about" class="form-control"><?php echo $user->get_about()?></textarea>
                             <br />
                             
                             <input type="hidden" name="action" value="info" />
@@ -119,8 +161,8 @@
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
                               method="post" role="form">
-                            <span class="text-danger"><?php echo $user->get_error();?></span>
-                            <span class="text-success"><?php echo $success_message;?></span>
+                            <span class="text-danger"><?php echo $pass_error;?></span>
+                            <span class="text-success"><?php echo $pass_success;?></span>
                             <br />
                             
                             <label>Old password</label>

@@ -3,20 +3,13 @@
     
     abstract class Person
     {
+        protected $id;
         protected $name;
         protected $username;
         protected $email;
         protected $password;
         protected $error;
-        
-        function __construct()
-        {
-            $this->name = "";
-            $this->email = "";
-            $this->username = "";
-            $this->password = "";
-            $this->error = "";
-        }
+        protected $gender;
         
         /**
          * This function is used to set the name of the person.
@@ -34,6 +27,25 @@
         public function set_username($username)
         {
             $this->username = $username;
+        }
+        
+        /**
+         * This function sets the gender of the user.
+         * @param string $gender
+         */
+        public function set_gender($gender)
+        {
+            $this->gender = $gender;
+        }
+        
+        /**
+         * This function returns the unique id of the user.
+         * All details must be set before calling this function.
+         * @return int
+         */
+        public function get_id()
+        {
+            return $this->id;
         }
         
         /**
@@ -71,6 +83,15 @@
         public function get_error()
         {
             return $this->error;
+        }
+        
+        /**
+         * This function returns the gender of the user.
+         * @return string
+         */
+        public function get_gender()
+        {
+           return $this->gender; 
         }
         
         /**

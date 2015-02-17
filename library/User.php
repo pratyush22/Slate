@@ -10,9 +10,33 @@ class User extends Person
     
     function __construct()
     {
-        $this->about = "";
+        $this->id = "";
+        $this->name = " ";
+        $this->email = "";
+        $this->username = "";
+        $this->gender = " ";
+        $this->password = "";
+        $this->about = " ";
         $this->image = null;
         $this->is_all_set = false;
+    }
+    
+    /**
+     * This function sets the about property of the user.
+     * @param string $about
+     */
+    public function set_about($about)
+    {
+        $this->about = $about;
+    }
+    
+    /**
+     * This function sets the image path property of the user.
+     * @param string $image
+     */
+    public function set_image($image)
+    {
+        $this->image = $image;
     }
     
     /**
@@ -63,6 +87,8 @@ class User extends Person
                 $this->about = $result["about"];
                 $this->image = $result["image"];
                 $this->password = $result["password"];
+                $this->gender = $result["gender"];
+                $this->id = $result["id"];
                 
                 $this->is_all_set = true;
             }
@@ -87,17 +113,20 @@ class User extends Person
      * This function updates the password of the user with
      * the new password.
      * @param string $new_password
+     * @return boolean Is password changing successful
      */
     public function change_password($old_password, $new_password, $confirm_password)
     {
         $password_changed = false;
         $query = "UPDATE user SET password = :password WHERE username = :username";
         
+        //  Verify the password before updating
         if (!$this->verify_password($old_password, $new_password, $confirm_password))
         {
             return false;
         }
         
+        //  Now update the password
         try
         {
             $db = new DatabaseConnection();
@@ -158,10 +187,64 @@ class User extends Person
     /**
      * This function updates the data in User table
      * with the current value of the properties.
+     * @return boolean Are all changes successfully updated
      */
     public function save_changes()
     {
+        $saved = false;
+        $query = "UPDATE user SET name = :name, username = :username, gender = :gender, "
+                . "about = :about WHERE username = :old_username";
         
+        $old_username = $this->username;
+        $this->clean_data();
+        $this->generate_username();
+        
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $statement = $connection->prepare($query);
+            
+            $statement->bindParam(":name", $this->name);
+            $statement->bindParam(":username", $this->username);
+            $statement->bindParam(":gender", $this->gender);
+            $statement->bindParam(":about", $this->about);
+            $statement->bindParam(":old_username", $old_username);
+            $statement->execute();
+            
+            $statement = null;
+            $connection = null;
+            
+            $saved = true;
+        }
+        catch (PDOException $ex)
+        {
+            $this->error = $ex->getCode();
+        }
+        
+        return $saved;
+    }
+    
+    /**
+     * This function cleans the data or remove unnecessary spaces
+     * from the data.
+     */
+    private function clean_data()
+    {
+        $this->name = trim($this->name);
+        $this->name = stripslashes($this->name);
+        
+        $this->about = trim($this->about);
+        $this->about = stripslashes($this->about);
+    }
+    
+    /**
+     * This function generates username from id and name.
+     */
+    private function generate_username()
+    {
+        $this->username = $this->name.".".$this->id;
+        $this->username = str_replace(' ', '.', $this->username);
     }
     
     /**
