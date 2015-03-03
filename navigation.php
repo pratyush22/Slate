@@ -4,6 +4,19 @@
             <a class="navbar-brand" href="index.php">Slate</a>
         </div>
         
+        <div class="col-lg-4">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control input-sm" placeholder="Search" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-default btn-sm" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
         <!--
           Right user menu containing
           profile and log out option.
@@ -38,5 +51,7 @@
                 </li>
             </ul>
         </div>
+        
+        <div class="clearfix"></div>
     </div>
 </nav>
