@@ -103,7 +103,8 @@ class User extends Person
         catch (PDOException $ex)
         {
             $fetched_successfully = false;
-            $this->error = "Database Issue: ".$ex->getMessage();
+            $this->error = "Can't set details now, try again later";
+            Logger::write_log("User", $ex->getMessage());
         }
         
         return $fetched_successfully;
@@ -142,7 +143,8 @@ class User extends Person
         }
         catch (PDOException $ex)
         {
-            $this->error = $ex->getMessage();
+            $this->error = "Can't change password, try again later";
+            Logger::write_log("User", $ex->getMessage());
         }
         
         return $password_changed;
@@ -220,7 +222,8 @@ class User extends Person
         }
         catch (PDOException $ex)
         {
-            $this->error = $ex->getCode();
+            $this->error = "Cannot save changes, try again later";
+            Login::write_log("User", $ex->getMessage());
         }
         
         return $saved;
@@ -286,7 +289,8 @@ class User extends Person
         }
         catch (PDOException $ex)
         {
-            $this->error = $ex->getMessage();
+            $this->error = "Can't delete account, try again later";
+            Login::write_log("User", $ex->getMessage());
             return false;
         }
         

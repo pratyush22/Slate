@@ -110,7 +110,8 @@
             catch (PDOException $ex)
             {
                 $login = false;
-                $this->error = "Database Issue";
+                $this->error = "incorrect email or password";
+                Logger::write_log("Login", $ex->getMessage());
             }
             
             return $login;

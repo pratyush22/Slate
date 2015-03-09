@@ -193,7 +193,8 @@
             catch (PDOException $ex)
             {
                 $is_signed_up = false;
-                $this->error = "Database Issue";
+                $this->error = "Input not valid";
+                Logger::write_log("Signup", $ex->getMessage());
             }
             
             return $is_signed_up;
