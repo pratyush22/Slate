@@ -31,7 +31,7 @@
                 <br />
                 <br />
                 
-                <a class="btn btn-default btn-block large-font-1-2">
+                <a class="btn btn-default btn-block large-font-1-2" href="writer.php">
                     <span class="glyphicon glyphicon-pencil pull-left"></span>&nbsp;
                     Write
                 </a>
