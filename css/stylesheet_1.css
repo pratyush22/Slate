@@ -14,7 +14,11 @@
 }
 
 .EpicEditorCustom {
-    border: #C3E1FF solid 2px;
-    border-radius: 5px;
+    border-left: #DDD solid 2px;
     min-height: 500px;
+    font-size: 1em;
+}
+
+.EpicEditorCustom h1 {
+    font-size: 1.5em;
 }

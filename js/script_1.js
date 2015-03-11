@@ -38,11 +38,16 @@ function showImage() {
 }
 
 function getEpicEditorForWriting() {
+    this.editor = null;
+    
+    if (editor !== null)
+        return editor;
+
     var options = {
         container: "epiceditor",
         textarea: null,
         basePath: "epiceditor",
-        clientSideStorage: true,
+        clientSideStorage: false,
         localStorageName: "epiceditor",
         useNativeFullScreen: true,
         parser: marked,
@@ -54,7 +59,7 @@ function getEpicEditorForWriting() {
         theme: {
             base: "/themes/base/epiceditor.css",
             preview: "/themes/preview/github.css",
-            editor: "/themes/editor/epic-light.css"
+            editor: "/themes/editor/epic-dark.css"
         },
         button: {
             preview: true,
@@ -72,9 +77,26 @@ function getEpicEditorForWriting() {
             toggleEdit: "Toggle Edit Mode",
             toggleFullScreen: "Enter Full Screen"
         },
-        autogrow: false
+        autogrow: true
+    };
+    
+    editor = new EpicEditor(options);
+    
+    var previewBtns = document.getElementsByName("preview");
+    for (var i = 0; i < previewBtns.length; i++) {
+        previewBtns[i].onclick = function() {
+            if (editor.is("preview")) editor.edit();
+            else editor.preview();
+        }
     }
     
-    var editor = new EpicEditor(options);
+    var clearBtns = document.getElementsByName("clear");
+    for (var i = 0; i < clearBtns.length; i++) {
+        clearBtns[i].onclick = function() {
+            if (confirm("Are you sure?"))
+                editor.getElement('editor').body.innerHTML = "";
+        }
+    }
+    
     return editor;
 }

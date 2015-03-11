@@ -19,9 +19,38 @@
         
         <main class="container">
             <div class="row">
+                <div class="col-sm-1">
+                    <br /><br />
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-success btn-block">Save</button>
+                        <button name="preview" class="btn btn-default">Preview</button>
+                        <button name="clear" class="btn btn-default">Clear</button>
+                    </div>
+                </div>
+                
                 <div class="col-sm-8">
-                    <div id="epiceditor" class="EpicEditorCustom">
+                    <label class="text-danger"></label>
+                    <label class="text-success"></label>
+                    
+                    <div class="form-group">
+                        <form role="form">
+                            <input type="text" name="title" required="required"
+                                   class="form-control" placeholder="Title"/>
+                            <textarea id="text" style="display:none;"></textarea>
+                        </form>
+                    </div>
+                    
+                    <div id="epiceditor" oninput="countCharacters()" class="EpicEditorCustom">
                         
+                    </div>
+                    <br />
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-success">Save</button>
+                        <button name="preview" class="btn btn-default">Preview</button>
+                        <button name="clear" class="btn btn-default">
+                            Clear
+                        </button>
                     </div>
                 </div>
             </div>
@@ -31,5 +60,7 @@
                 editor.load();
             </script>
         </main>
+        
+        <?php include "footer.php";?>
     </body>
 </html>
