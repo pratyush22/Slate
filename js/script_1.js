@@ -37,15 +37,20 @@ function showImage() {
         alert("File API's are not supported by your browser");
 }
 
+/**
+ * Epic Editor initialization
+ * @returns {EpicEditor|getEpicEditorForWriting.editor}
+ */
 function getEpicEditorForWriting() {
     this.editor = null;
+    this.maxChars = 1200;
     
     if (editor !== null)
         return editor;
 
     var options = {
         container: "epiceditor",
-        textarea: null,
+        textarea: 'text',
         basePath: "epiceditor",
         clientSideStorage: false,
         localStorageName: "epiceditor",
@@ -62,8 +67,9 @@ function getEpicEditorForWriting() {
             editor: "/themes/editor/epic-dark.css"
         },
         button: {
-            preview: true,
-            fullscreen: true,
+            edit: false,
+            preview: false,
+            fullscreen: false,
             bar: "auto"
         },
         focusOnLoad: false,
@@ -82,21 +88,39 @@ function getEpicEditorForWriting() {
     
     editor = new EpicEditor(options);
     
-    var previewBtns = document.getElementsByName("preview");
-    for (var i = 0; i < previewBtns.length; i++) {
-        previewBtns[i].onclick = function() {
-            if (editor.is("preview")) editor.edit();
-            else editor.preview();
+    var previewButton = document.getElementById("preview");
+    previewButton.onclick = function() {
+        if (editor.is('preview')) editor.edit();
+        else editor.preview();
+    }
+    
+    var clearButton = document.getElementById("clear");
+    var text = document.getElementById('text');
+    clearButton.onclick = function() {
+        if (confirm("Are you sure?")) {
+            editor.getElement("editor").body.innerHTML = "";
+            text.innerHTML = "";
         }
     }
     
-    var clearBtns = document.getElementsByName("clear");
-    for (var i = 0; i < clearBtns.length; i++) {
-        clearBtns[i].onclick = function() {
-            if (confirm("Are you sure?"))
-                editor.getElement('editor').body.innerHTML = "";
-        }
+    var fullScreenButton = document.getElementById("full");
+    fullScreenButton.onclick = function() {
+        editor.enterFullscreen();
     }
     
-    return editor;
+    var charLeft = document.getElementById('char-left');
+    editor.on('load', function() {
+        editor.getElement('editor').body.innerHTML = "";
+        editor.getElement('editor').body.onkeyup = function() {
+            var string = text.value;
+            string = string.trim();
+            charLeft.innerHTML = (maxChars - string.length) + " Left";
+        }
+    });
+    
+    editor.load();
+}
+
+function savePost() {
+    
 }

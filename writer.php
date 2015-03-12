@@ -17,26 +17,37 @@
     <body>
         <?php include "./navigation.php"; ?>
         
+        <!-- Bottom control menu -->
+        <div class="writer-bottom-menu">
+            <div class="pull-left">
+                <div class="btn-group">
+                    <button id="save" onclick="savePost()" class="btn btn-success">Save</button>
+                    <button id="preview" class="btn btn-default">Toggle Preview</button>
+                    <button id="clear" class="btn btn-default">Clear</button>
+                    <button id="full" class="btn btn-default">Full Screen</button>
+                </div>
+            </div>
+            
+            <div class="pull-right">
+                <div id="char-left" style="color: white; font-size: 1em">1200 Left</div>
+            </div>
+        </div>
+        
         <main class="container">
             <div class="row">
                 <div class="col-sm-1">
-                    <br /><br />
-                    <div class="btn-group-vertical">
-                        <button class="btn btn-success btn-block">Save</button>
-                        <button name="preview" class="btn btn-default">Preview</button>
-                        <button name="clear" class="btn btn-default">Clear</button>
-                    </div>
                 </div>
                 
+                <!-- Editor Column -->
                 <div class="col-sm-8">
                     <label class="text-danger"></label>
                     <label class="text-success"></label>
                     
                     <div class="form-group">
-                        <form role="form">
+                        <form id="save" role="form">
                             <input type="text" name="title" required="required"
                                    class="form-control" placeholder="Title"/>
-                            <textarea id="text" style="display:none;"></textarea>
+                            <textarea id="text" name="post" style="display: none"></textarea>
                         </form>
                     </div>
                     
@@ -44,20 +55,11 @@
                         
                     </div>
                     <br />
-                    
-                    <div class="btn-group">
-                        <button class="btn btn-success">Save</button>
-                        <button name="preview" class="btn btn-default">Preview</button>
-                        <button name="clear" class="btn btn-default">
-                            Clear
-                        </button>
-                    </div>
                 </div>
             </div>
             
             <script type="text/javascript">
-                var editor = getEpicEditorForWriting();
-                editor.load();
+                getEpicEditorForWriting();
             </script>
         </main>
         
