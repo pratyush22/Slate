@@ -31,10 +31,11 @@
                 <br />
                 <br />
                 
+                <button class="btn btn-default btn-block large-font-1-2">Recent Posts</button>
                 <a class="btn btn-default btn-block large-font-1-2" href="writer.php">
-                    <span class="glyphicon glyphicon-pencil pull-left"></span>&nbsp;
-                    Write
+                    New Post
                 </a>
+                <button class="btn btn-default btn-block large-font-1-2">My Posts</button>
             </div>
         </main>
     </body>

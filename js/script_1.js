@@ -100,6 +100,7 @@ function getEpicEditorForWriting() {
         if (confirm("Are you sure?")) {
             editor.getElement("editor").body.innerHTML = "";
             text.innerHTML = "";
+            updateCharLeft(maxChars, 0);
         }
     }
     
@@ -109,12 +110,16 @@ function getEpicEditorForWriting() {
     }
     
     var charLeft = document.getElementById('char-left');
+    function updateCharLeft(max, used) {
+        charLeft.innerHTML = (max - used) + " left";
+    }
+    
     editor.on('load', function() {
         editor.getElement('editor').body.innerHTML = "";
         editor.getElement('editor').body.onkeyup = function() {
             var string = text.value;
             string = string.trim();
-            charLeft.innerHTML = (maxChars - string.length) + " Left";
+            updateCharLeft(maxChars, string.length);
         }
     });
     

@@ -25,6 +25,7 @@
                     <button id="preview" class="btn btn-default">Toggle Preview</button>
                     <button id="clear" class="btn btn-default">Clear</button>
                     <button id="full" class="btn btn-default">Full Screen</button>
+                    <button class="btn btn-default">Publish Post</button>
                 </div>
             </div>
             
@@ -48,6 +49,7 @@
                             <input type="text" name="title" required="required"
                                    class="form-control" placeholder="Title"/>
                             <textarea id="text" name="post" style="display: none"></textarea>
+                            <input type="hidden" name="action" value="save" />
                         </form>
                     </div>
                     
