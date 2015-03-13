@@ -129,3 +129,37 @@ function getEpicEditorForWriting() {
 function savePost() {
     
 }
+
+/**
+ * Function to redirect to 'page' with 'value'
+ */
+function redirect(value, page) {
+    var form = document.getElementById("operation");
+    var input = document.getElementsByName("action");
+    
+    input[0].value = value;
+    form.action = page;
+    form.submit();
+}
+
+function xmlRequest(method, url, element) {
+    var xml = new XMLHttpRequest();
+    xml.open(method, url, true);
+    xml.send();
+
+    xml.onreadystatechange = function () {
+        if (xml.readyState == 4 && xml.status == 200) {
+            element.innerHTML = xml.responseText;
+        }
+    }
+}
+
+function getMyPosts() {
+    var element = document.getElementById("display-container");
+    xmlRequest("GET", "myposts.php", element);
+}
+
+function deletePost(id) {
+    xmlRequest("GET", "deletepost.php?pid=" + id);
+    getMyPosts();
+}

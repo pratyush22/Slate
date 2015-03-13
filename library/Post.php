@@ -5,6 +5,9 @@
  *
  * @author pratyush
  */
+
+include "autoload.php";
+
 class Post
 {
     private $pid;           //  Post Id
@@ -13,7 +16,8 @@ class Post
     private $post_path;     //  Path of the post
     private $post_content;  //  Content of the post
     private $likes;         //  Likes on the post
-    private $state;
+    private $state;         //  State of the post
+    private $base_path;
     
     function __construct()
     {
@@ -22,8 +26,9 @@ class Post
         $this->title = "";
         $this->post_path = "";
         $this->post_content = "";
-        $this->liked = 0;
+        $this->likes = 0;
         $this->state = "draft";
+        $this->base_path = "./data";
     }
     
     /**
@@ -114,5 +119,71 @@ class Post
     public function get_state()
     {
         return $this->state;
+    }
+    
+    /**
+     * Function to create user directory if not exist already.
+     * If directory is created then its path will be stored in
+     * base path property.
+     * @param type $username
+     */
+    private function create_user_directory($username)
+    {
+        $user = new User();
+        $user->set_details_from_database($username);
+        $this->uid = $user->get_id();
+        $this->base_path = $this->base_path."/".$this->uid;
+        
+        if (!file_exists($this->base_path))
+        {
+            mkdir($this->base_path, 0777, true);
+        }
+    }
+    
+    /**
+     * Function to create directory named as the post id.
+     * @param int $id
+     */
+    private function create_post_directory($id)
+    {
+        $this->post_path = $this->base_path."/".$id;
+        if (!file_exists($this->post_path))
+        {
+            mkdir($this->post_path, 0777, true);
+        }
+    }
+    
+    public function create_new_post($username)
+    {
+        $this->create_user_directory($username);
+        $query = "INSERT INTO post(uid, likes, title, state) VALUES(:uid, :likes, :title, :state)";
+        
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":uid", $this->uid);
+            $statement->bindParam(":likes", $this->likes);
+            $statement->bindParam(":state", $this->state);
+            $statement->bindParam(":title", $this->title);
+            $statement->execute();
+            
+            $this->pid = $connection->lastInsertId();
+            $this->create_post_directory($this->pid);
+            $query = "UPDATE post SET post = :path WHERE pid = :pid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":path", $this->post_path);
+            $statement->bindParam(":pid", $this->pid);
+            $statement->execute();
+            
+            $statement = null;
+            $connection = null;
+            
+        }
+        catch (Exception $ex)
+        {
+            Logger::write_log("Post", $ex->getMessage());
+        }
     }
 }

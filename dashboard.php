@@ -15,9 +15,15 @@
         <link rel="stylesheet" href="./css/stylesheet_1.css" >
         <script src="/js/jquery.js"></script>
         <script src="./css/dist/js/bootstrap.min.js"></script>
+        <script src="./js/script_1.js"></script>
     </head>
     <body>
         <?php include "navigation.php";?>
+        
+        <!-- Form for redirecting -->
+        <form id="operation" method="post">
+            <input name="action" type="hidden" value="" />
+        </form>
         
         <main class="row container">
             <!-- Left pane -->
@@ -31,11 +37,16 @@
                 <br />
                 <br />
                 
-                <button class="btn btn-default btn-block large-font-1-2">Recent Posts</button>
-                <a class="btn btn-default btn-block large-font-1-2" href="writer.php">
-                    New Post
-                </a>
-                <button class="btn btn-default btn-block large-font-1-2">My Posts</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="">Recent Posts</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="redirect('new', 'writer.php')">New Post</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="getMyPosts()">My Posts</button>
+            </div>
+            
+            <!-- Middle Column -->
+            <div class="col-sm-8">
+                <div id="display-container">
+                    
+                </div>
             </div>
         </main>
     </body>

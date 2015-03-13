@@ -34,3 +34,10 @@
     border-top: 2px solid white;
     z-index: 2;
 }
+
+.post-list {
+    margin: 5px;
+    padding: 10px;
+    border: solid 1px grey;
+    border-radius: 5px;
+}

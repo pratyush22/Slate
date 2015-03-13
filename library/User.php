@@ -251,6 +251,29 @@ class User extends Person
         $this->username = str_replace(' ', '.', $this->username);
     }
     
+    private function delete_directory($path)
+    {
+        if (substr($path, strlen($path) - 1, 1) != '/')
+        {
+            $path .= '/';
+        }
+
+        $files = glob($path . '*', GLOB_MARK);
+        foreach ($files as $file) 
+        {
+            if (is_dir($file))
+            {
+                delete_directory($file);
+            }
+            else
+            {
+                unlink($file);
+            }
+        }
+
+        rmdir($path);
+    }
+    
     /**
      * Function to delete user account.
      * All details must be set before calling this function.
@@ -270,6 +293,7 @@ class User extends Person
             //  Delete the user image from the user's folder
             if (strcmp($this->image, "images/Icon-user.png"))
             {
+                $this->delete_directory("./data/".$this->id);
                 if (!unlink($this->image))
                 {
                     $this->error = "Your account can't be deleted";

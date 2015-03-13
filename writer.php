@@ -1,7 +1,24 @@
 <!DOCTYPE html>
 <?php
     include "./library/autoload.php";
-    include "./library/security.php"
+    include "./library/security.php";
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        if ($_POST["action"] == "new")
+        {
+            $post = new Post();
+            $post->create_new_post($_SESSION['username']);
+        }
+        else
+        {
+            header("Location: dashboard.php");
+            exit();
+        }
+    }
+    
+    $_SERVER["REQUEST_METHOD"] = "GET";
+    $_POST["action"] = "";
 ?>
 <html>
     <head>
