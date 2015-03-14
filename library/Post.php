@@ -153,6 +153,10 @@ class Post
         }
     }
     
+    /**
+     * Function to create a new post.
+     * @param string $username
+     */
     public function create_new_post($username)
     {
         $this->create_user_directory($username);
@@ -182,6 +186,49 @@ class Post
             
         }
         catch (Exception $ex)
+        {
+            Logger::write_log("Post", $ex->getMessage());
+        }
+    }
+    
+    /**
+     * Function to set the post properties using the pid and
+     * uid given in the arguments.
+     * @param type $pid
+     * @param type $uid
+     */
+    public function get_post($pid, $uid)
+    {
+        $this->pid = $pid;
+        $this->uid = $uid;
+        
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $query = "SELECT title, post, likes, state FROM post WHERE pid = :pid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":pid", $this->pid);
+            $statement->execute();
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $statement->fetch();
+            
+           if ($result)
+           {
+                $this->post_path = $result["post"];
+                $this->title = $result["title"];
+                $this->likes = $result["likes"];
+                $this->state = $result["state"];
+           }
+            $statement = null;
+            $connection = null;
+            
+            $path = $this->post_path."/post.md";
+            $file = fopen($path, "r");
+            $this->post_content = fread($file, filesize($path));
+            fclose($file);
+        }
+        catch (PDOException $ex)
         {
             Logger::write_log("Post", $ex->getMessage());
         }

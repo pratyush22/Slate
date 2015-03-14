@@ -45,7 +45,7 @@
             <!-- Middle Column -->
             <div class="col-sm-8">
                 <div id="display-container">
-                    
+                    <div class="nothing">Nothing to display</div>
                 </div>
             </div>
         </main>

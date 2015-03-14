@@ -16,10 +16,8 @@ function showImage() {
     var imageHolder = document.getElementById("user_pic");
 
 
-    if (window.File && window.FileReader)
-    {
-        if (!files[0].type.match("image.*"))
-        {
+    if (window.File && window.FileReader) {
+        if (!files[0].type.match("image.*")) {
             alert("Selected file is not an image");
             document.getElementById("file_upload").value = "";
             return;
@@ -124,10 +122,11 @@ function getEpicEditorForWriting() {
     });
     
     editor.load();
-}
-
-function savePost() {
-    
+    var string = text.value;
+    string = string.trim();
+    if (string !== "") {
+        editor.importFile("epiceditor", string);
+    }
 }
 
 /**
@@ -142,24 +141,102 @@ function redirect(value, page) {
     form.submit();
 }
 
-function xmlRequest(method, url, element) {
+/**
+ * Ajax helper function
+ * @param string method
+ * @param string url
+ * @param DOM object element
+ * @param string string
+ * @returns {undefined}
+ */
+function xmlRequest(method, url, element, string) {
     var xml = new XMLHttpRequest();
     xml.open(method, url, true);
-    xml.send();
+    
+    if (method === "GET") xml.send();
+    else xml.send(string);
 
     xml.onreadystatechange = function () {
-        if (xml.readyState == 4 && xml.status == 200) {
+        if (xml.readyState === 4 && xml.status === 200) {
             element.innerHTML = xml.responseText;
         }
     }
 }
 
+/**
+ * Function to display users post.
+ */
 function getMyPosts() {
     var element = document.getElementById("display-container");
     xmlRequest("GET", "myposts.php", element);
 }
 
+/**
+ * Function to delete post with specific id.
+ * @param number id
+ */
 function deletePost(id) {
-    xmlRequest("GET", "deletepost.php?pid=" + id);
-    getMyPosts();
+    if (confirm("Are you sure?")) {
+        xmlRequest("GET", "deletepost.php?pid=" + id);
+        getMyPosts();
+    }
+}
+
+/**
+ * Function to save the post
+ */
+function savePost() {
+    var title = document.getElementById("title").value;
+    title = title.trim();
+    
+    var content = document.getElementById("text").value;
+    content = content.trim();
+    
+    var pid = document.getElementById("pid").value;
+    var uid = document.getElementById("uid").value;
+    
+    var string = "title=" + title + "&content=" + content + "&pid=" + pid + "&uid=" + uid;
+    var xml = new XMLHttpRequest();
+    xml.open("POST", "savepost.php", true);
+    xml.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xml.send(string);
+    
+    xml.onreadystatechange = function() {
+        if (xml.readyState === 4 && xml.status === 200) {
+            alert("Saved");
+        }
+    };
+}
+
+/**
+ * Function to open writer page with edit options.
+ * @param numeric pid
+ * @param numeric uid
+ * @returns {undefined}
+ */
+function editPost(pid, uid) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "writer.php");
+    
+    var field = document.createElement("input");
+    field.setAttribute("type", "hidden");
+    field.setAttribute("name", "pid");
+    field.setAttribute("value", pid);
+    form.appendChild(field);
+    
+    field = document.createElement("input");
+    field.setAttribute("type", "hidden");
+    field.setAttribute("name", "uid");
+    field.setAttribute("value", uid);
+    form.appendChild(field);
+    
+    field = document.createElement("input");
+    field.setAttribute("type", "hidden");
+    field.setAttribute("name", "action");
+    field.setAttribute("value", "edit");
+    form.appendChild(field);
+    
+    document.body.appendChild(form);
+    form.submit();
 }

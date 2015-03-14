@@ -3,12 +3,30 @@
     include "./library/autoload.php";
     include "./library/security.php";
     
+    $pid = "";
+    $uid = "";
+    $title = "";
+    $content = "";
+    $state = "";
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if ($_POST["action"] == "new")
         {
             $post = new Post();
             $post->create_new_post($_SESSION['username']);
+            $pid = $post->get_pid();
+            $uid = $post->get_uid();
+        }
+        else if ($_POST["action"] == "edit")
+        {
+            $post = new Post();
+            $post->get_post($_POST["pid"], $_POST["uid"]);
+            $pid = $post->get_pid();
+            $uid = $post->get_uid();
+            $title = $post->get_title();
+            $content = $post->get_post_content();
+            $state = $post->get_state();
         }
         else
         {
@@ -63,10 +81,11 @@
                     
                     <div class="form-group">
                         <form id="save" role="form">
-                            <input type="text" name="title" required="required"
-                                   class="form-control" placeholder="Title"/>
-                            <textarea id="text" name="post" style="display: none"></textarea>
-                            <input type="hidden" name="action" value="save" />
+                            <input type="text" id="title"
+                                   class="form-control" placeholder="Title" value="<?php echo $title;?>"/>
+                            <textarea id="text" name="post" style="display: none"><?php echo $content;?></textarea>
+                            <input type="hidden" id="uid" value="<?php echo $uid;?>" />
+                            <input type="hidden" id="pid" value="<?php echo $pid;?>" />
                         </form>
                     </div>
                     

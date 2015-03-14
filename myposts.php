@@ -32,18 +32,17 @@ try
 ?>
 
 <div class="post-list">
-    <form>
-        <input id="<?php echo $pid;?>" type="hidden" value="<?php echo $pid;?>" />
-    </form>
+    <!-- Title block -->
+    <span><h2>Title:&nbsp<span class="text-info"><?php echo $title;?></span></h2></span>
     
-    <span><h2>Title:&nbsp</h2><?php echo $title;?></span>
-    
+    <!-- Control block -->
     <div class="pull-left">
-        <a onclick="">Edit</a> | 
+        <a onclick="editPost(<?php echo $pid;?>, <?php echo $uid;?>)">Edit</a> | 
         <a>View</a> | 
         <a onclick="deletePost(<?php echo $pid;?>)">Delete</a>
     </div>
     
+    <!-- Information block -->
     <div class="pull-right">
         <label><?php echo $likes." likes"?></label> | 
         <label><?php echo $state;?></label>
