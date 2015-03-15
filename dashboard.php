@@ -37,7 +37,7 @@
                 <br />
                 <br />
                 
-                <button class="btn btn-default btn-block large-font-1-2" onclick="">Recent Posts</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="recentPosts()">Recent Posts</button>
                 <button class="btn btn-default btn-block large-font-1-2" onclick="redirect('new', 'writer.php')">New Post</button>
                 <button class="btn btn-default btn-block large-font-1-2" onclick="getMyPosts()">My Posts</button>
             </div>

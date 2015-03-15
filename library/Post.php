@@ -233,4 +233,72 @@ class Post
             Logger::write_log("Post", $ex->getMessage());
         }
     }
+    
+    /**
+     * Function to publish post. No need to set all the properties
+     * of the post for publishing. Returns whether post was published or not.
+     * @param numeric $pid
+     * @return boolean
+     */
+    public function publish_post($pid)
+    {
+        $published = false;
+        $state = "published";
+        
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $query = "UPDATE post SET state = :state WHERE pid = :pid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":state", $state);
+            $statement->bindParam(":pid", $pid);
+            $statement->execute();
+            
+            $statement = null;
+            $connection = null;
+            
+            $published = true;
+        }
+        catch (Exception $ex)
+        {
+            Logger::write_log("Post", $ex->getMessage());
+        }
+        
+        return $published;
+    }
+    
+    /**
+     * Function to revert the post. No need to set the properties
+     * of the post before calling this function. It returns whether
+     * the post was reverted or not.
+     * @param numeric $pid
+     * @return boolean
+     */
+    public function revert_post($pid)
+    {
+        $reverted = false;
+        $state = "draft";
+        
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $query = "UPDATE post SET state = :state WHERE pid = :pid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":state", $state);
+            $statement->bindParam(":pid", $pid);
+            $statement->execute();
+            
+            $statement = null;
+            $connection = null;
+            $reverted = true;
+        }
+        catch (PDOException $ex)
+        {
+            Logger::write_log("Post", $ex->getMessage());
+        }
+        
+        return $reverted;
+    }
 }

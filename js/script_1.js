@@ -154,13 +154,16 @@ function xmlRequest(method, url, element, string) {
     xml.open(method, url, true);
     
     if (method === "GET") xml.send();
-    else xml.send(string);
+    else {
+        xml.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xml.send(string);
+    }
 
     xml.onreadystatechange = function () {
         if (xml.readyState === 4 && xml.status === 200) {
             element.innerHTML = xml.responseText;
         }
-    }
+    };
 }
 
 /**
@@ -239,4 +242,23 @@ function editPost(pid, uid) {
     
     document.body.appendChild(form);
     form.submit();
+}
+
+function publishPost(element) {
+    var pid = document.getElementById("pid").value;
+    var string = "pid=" + pid;
+    xmlRequest("POST", "publishpost.php", element, string);
+    alert("Post published");
+}
+
+function revertPost(element) {
+    var pid = document.getElementById("pid").value;
+    var string = "pid=" + pid;
+    xmlRequest("POST", "revertpost.php", element, string);
+    alert("Post reverted");
+}
+
+function recentPosts() {
+    var element = document.getElementById("display-container");
+    xmlRequest("GET", "recentposts.php", element);
 }

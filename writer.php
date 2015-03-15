@@ -7,7 +7,8 @@
     $uid = "";
     $title = "";
     $content = "";
-    $state = "";
+    $state = "draft";
+    $function = "";
     
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
@@ -35,8 +36,16 @@
         }
     }
     
-    $_SERVER["REQUEST_METHOD"] = "GET";
-    $_POST["action"] = "";
+    if ($state == "draft")
+    {
+        $state = "Publish Post";
+        $function = "publishPost(this)";
+    }
+    else if ($state == "published")
+    {
+        $state = "Revert Post";
+        $function = "revertPost(this)";
+    }
 ?>
 <html>
     <head>
@@ -60,7 +69,7 @@
                     <button id="preview" class="btn btn-default">Toggle Preview</button>
                     <button id="clear" class="btn btn-default">Clear</button>
                     <button id="full" class="btn btn-default">Full Screen</button>
-                    <button class="btn btn-default">Publish Post</button>
+                    <button class="btn btn-default" onclick="<?php echo $function;?>"><?php echo $state;?></button>
                 </div>
             </div>
             
@@ -89,7 +98,7 @@
                         </form>
                     </div>
                     
-                    <div id="epiceditor" oninput="countCharacters()" class="EpicEditorCustom">
+                    <div id="epiceditor" class="EpicEditorCustom">
                         
                     </div>
                     <br />
