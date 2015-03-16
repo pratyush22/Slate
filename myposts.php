@@ -33,12 +33,12 @@ try
 
 <div class="post-list">
     <!-- Title block -->
-    <span><h2>Title:&nbsp<span class="text-info"><?php echo $title;?></span></h2></span>
+    <span><h2>Title:&nbsp;<span class="text-info"><?php echo $title;?></span></h2></span>
     
     <!-- Control block -->
     <div class="pull-left">
         <a onclick="editPost(<?php echo $pid;?>, <?php echo $uid;?>)">Edit</a> | 
-        <a>View</a> | 
+        <a href="viewpost.php?pid=<?php echo $pid;?>">View</a> | 
         <a onclick="deletePost(<?php echo $pid;?>)">Delete</a>
     </div>
     

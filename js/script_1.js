@@ -62,7 +62,7 @@ function getEpicEditorForWriting() {
         theme: {
             base: "/themes/base/epiceditor.css",
             preview: "/themes/preview/github.css",
-            editor: "/themes/editor/epic-dark.css"
+            editor: "/themes/editor/epic-light.css"
         },
         button: {
             edit: false,
@@ -70,7 +70,7 @@ function getEpicEditorForWriting() {
             fullscreen: false,
             bar: "auto"
         },
-        focusOnLoad: false,
+        focusOnLoad: true,
         shortcut: {
             modifier: 18,
             fullscreen: 70,
@@ -121,11 +121,11 @@ function getEpicEditorForWriting() {
         }
     });
     
-    editor.load();
+    this.editor.load();
     var string = text.value;
     string = string.trim();
     if (string !== "") {
-        editor.importFile("epiceditor", string);
+        this.editor.importFile("epiceditor", string);
     }
 }
 
@@ -195,6 +195,12 @@ function savePost() {
     var content = document.getElementById("text").value;
     content = content.trim();
     
+    if (content.length > 1200)
+    {
+        alert("Character limit crossed, can't save");
+        return;
+    }
+    
     var pid = document.getElementById("pid").value;
     var uid = document.getElementById("uid").value;
     
@@ -248,6 +254,9 @@ function publishPost(element) {
     var pid = document.getElementById("pid").value;
     var string = "pid=" + pid;
     xmlRequest("POST", "publishpost.php", element, string);
+    element.onclick = function () {
+        revertPost(element);
+    };
     alert("Post published");
 }
 
@@ -255,10 +264,63 @@ function revertPost(element) {
     var pid = document.getElementById("pid").value;
     var string = "pid=" + pid;
     xmlRequest("POST", "revertpost.php", element, string);
+    element.onclick = function () {
+        publishPost(element);
+    };
     alert("Post reverted");
 }
 
 function recentPosts() {
     var element = document.getElementById("display-container");
     xmlRequest("GET", "recentposts.php", element);
+}
+
+function loadEpicEditor() {
+    this.editor = null;
+    
+    var options = {
+        container: "epiceditor",
+        textarea: 'text',
+        basePath: "epiceditor",
+        clientSideStorage: false,
+        localStorageName: "epiceditor",
+        useNativeFullScreen: false,
+        parser: marked,
+        file: {
+            name: "epiceditor",
+            defaultContent: "",
+            autoSave: 100
+        },
+        theme: {
+            base: "/themes/base/epiceditor.css",
+            preview: "/themes/preview/github.css",
+            editor: "/themes/editor/epic-dark.css"
+        },
+        button: {
+            edit: false,
+            preview: false,
+            fullscreen: false,
+            bar: "auto"
+        },
+        focusOnLoad: false,
+        shortcut: {
+            modifier: 18,
+            fullscreen: 70,
+            preview: 80
+        },
+        string: {
+            togglePreview: "Toggle Preview Mode",
+            toggleEdit: "Toggle Edit Mode",
+            toggleFullScreen: "Enter Full Screen"
+        },
+        autogrow: true
+    };
+    
+    this.editor = new EpicEditor(options);
+    this.editor.load();
+    
+    var text = document.getElementById("text").value;
+    text = text.trim();
+    this.editor.importFile("epiceditor", text);
+    this.editor.preview();
 }

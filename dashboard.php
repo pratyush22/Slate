@@ -48,6 +48,10 @@
                     <div class="nothing">Nothing to display</div>
                 </div>
             </div>
+            
+            <script>
+                recentPosts();
+            </script>
         </main>
     </body>
 </html>
