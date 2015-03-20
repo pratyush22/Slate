@@ -38,7 +38,7 @@ try
     <!-- Control block -->
     <div class="pull-left">
         <a onclick="editPost(<?php echo $pid;?>, <?php echo $uid;?>)">Edit</a> | 
-        <a href="viewpost.php?pid=<?php echo $pid;?>">View</a> | 
+        <a href="viewpost.php?pid=<?php echo $pid;?>&uid=<?php echo $uid;?>">View</a> | 
         <a onclick="deletePost(<?php echo $pid;?>)">Delete</a>
     </div>
     

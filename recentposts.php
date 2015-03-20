@@ -55,7 +55,7 @@ try
 
 <div class="post-list">
     <div>
-        <a href="viewpost.php?pid=<?php echo $pid;?>"><h2 style="display: inline;" class="text-info"><?php echo $title;?></h2></a>
+        <a href="viewpost.php?pid=<?php echo $pid;?>&uid=<?php echo $uid;?>"><h2 style="display: inline;" class="text-info"><?php echo $title;?></h2></a>
         
         <div class="pull-right">
         <span style="font-size: 1.6em;"><?php echo $likes;?>&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span></span>

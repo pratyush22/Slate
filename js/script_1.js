@@ -41,7 +41,7 @@ function showImage() {
  */
 function getEpicEditorForWriting() {
     this.editor = null;
-    this.maxChars = 1200;
+    this.maxChars = 5000;
     
     if (editor !== null)
         return editor;
@@ -195,7 +195,7 @@ function savePost() {
     var content = document.getElementById("text").value;
     content = content.trim();
     
-    if (content.length > 1200)
+    if (content.length > 5000)
     {
         alert("Character limit crossed, can't save");
         return;
@@ -323,4 +323,43 @@ function loadEpicEditor() {
     text = text.trim();
     this.editor.importFile("epiceditor", text);
     this.editor.preview();
+}
+
+function likePost(pid) {
+    var xml = new XMLHttpRequest();
+    xml.open("GET", "likepost.php?pid=" + pid);
+    xml.send();
+    
+    xml.onreadystatechange = function() {
+        if (xml.readyState === 4 && xml.status === 200) {
+            alert("Post liked");
+        }
+    };
+}
+
+function uploadImage() {
+    var pid = document.getElementById("pid").value;
+    var uid = document.getElementById("uid").value;
+    
+    var message = document.getElementById("message");
+    message.innerHTML = "Uploading...";
+    
+    var formData = new FormData(document.getElementById("image-form"));
+    var xml = new XMLHttpRequest();
+    xml.open("POST", "uploadimage.php", true);
+    // xml.setRequestHeader("Content-type","multipart/form-data");
+    xml.send(formData);
+    
+    xml.onreadystatechange = function() {
+        if (xml.readyState === 4 && xml.status === 200) {
+            message.innerHTML = xml.responseText;
+            displayImages(pid, uid);
+        }
+    };
+}
+
+function displayImages(pid, uid) {
+    var displayBlock = document.getElementById("image-display");
+    var url = "displayimages.php?pid=" + pid + "&uid=" + uid;
+    xmlRequest("GET", url, displayBlock);
 }

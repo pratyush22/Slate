@@ -39,7 +39,7 @@
             }
             
             //  Upload Image if available
-            if (isset($_FILES["user_image"]))
+            if (isset($_FILES["user_image"]["name"]) && !empty($_FILES["user_image"]["name"]))
             {
                 $target_dir = "images/users/";
                 

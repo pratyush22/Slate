@@ -17,6 +17,7 @@
     font-size: 1em;
     border-left: solid 2px #555;
     border-radius: 0px;
+    min-height: 400px;
 }
 
 .EpicEditorCustom h1 {
@@ -47,9 +48,38 @@
     padding: 10px;
     border: solid 1px #AAA;
     border-radius: 2px;
+    background-color: white;
 }
 
 .post-list a {
     text-decoration: none;
     cursor: pointer;
+}
+
+.post-title {
+    text-align: center;
+    margin: 5px;
+}
+
+.post-title h1 {
+    margin: 0px;
+    font-size: 3.5em;
+}
+
+.white-background {
+    background-color: white;
+}
+
+.img-upload-block {
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.img-display {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #AAA;
+    border-radius: 5px;
 }

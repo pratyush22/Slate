@@ -74,14 +74,12 @@
             </div>
             
             <div class="pull-right">
-                <div id="char-left" style="color: white; font-size: 1em">1200 Left</div>
+                <div id="char-left" style="color: white; font-size: 1em">5000 Left</div>
             </div>
         </div>
         
         <main class="container">
             <div class="row">
-                <div class="col-sm-1">
-                </div>
                 
                 <!-- Editor Column -->
                 <div class="col-sm-8">
@@ -102,6 +100,38 @@
                         
                     </div>
                     <br />
+                </div>
+                
+                <!-- Second column -->
+                <div class="col-sm-4">
+                    <!-- Image uploading block -->
+                    <div class="img-upload-block">
+                        <span class="text-info text-center">
+                            <h3>Upload Image</h3>
+                        </span>
+                        <hr />
+                        
+                        <form id="image-form" onsubmit="return false;" method="post" enctype="multipart/form-data">
+                            <input id="image" type="file" name="image" />
+                            <input type="hidden" id="pid" name="pid" value="<?php echo $pid;?>" />
+                            <input type="hidden" id="uid" name="uid" value="<?php echo $uid;?>" />
+                            <br />
+                            <button class="btn btn-success btn-sm"
+                                    onclick="uploadImage()">Upload</button>&nbsp;
+                            <label>Status:</label> <span id="message">Nothing to upload</span>
+                        </form>
+                    </div>
+                    <hr />
+                    
+                    <div id="image-display">
+                        
+                    </div>
+                    
+                    <script type="text/javascript">
+                        var pid = <?php echo $pid;?>;
+                        var uid = <?php echo $uid;?>;
+                        displayImages(pid, uid);
+                    </script>
                 </div>
             </div>
             

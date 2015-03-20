@@ -263,7 +263,7 @@ class User extends Person
         {
             if (is_dir($file))
             {
-                delete_directory($file);
+                $this->delete_directory($file);
             }
             else
             {
@@ -319,6 +319,35 @@ class User extends Person
         }
         
         return true;
+    }
+    
+    public function set_min_details($uid)
+    {
+        try
+        {
+            $db = new DatabaseConnection();
+            $connection = $db->get_connection();
+            $query = "SELECT name, image, about FROM user WHERE id = :uid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":uid", $uid);
+            $statement->execute();
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $statement->fetch();
+            
+            if ($result)
+            {
+                $this->name = $result["name"];
+                $this->image = $result["image"];
+                $this->about = $result["about"];
+            }
+            
+            $statement = null;
+            $connection = null;
+        }
+        catch (Exception $ex)
+        {
+            Logger::write_log("User", $ex->getMessage());
+        }
     }
 }
 
