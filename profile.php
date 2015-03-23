@@ -142,8 +142,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Profile</title>
         <link rel="stylesheet" href="./css/dist/css/bootstrap.min.css">
-        <script src="js/script_1.js"></script>
-        <script src="/js/jquery.js"></script>
+        <script src="./js/script_1.js"></script>
+        <script src="./js/jquery.js"></script>
         <script src="./css/dist/js/bootstrap.min.js"></script>
     </head>
     <body>

@@ -51,7 +51,7 @@
         <title>Slate</title>
         <link rel="stylesheet" href="./css/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/stylesheet_1.css">
-        <script src="/js/jquery.js"></script>
+        <script src="./js/jquery.js"></script>
         <script src="./css/dist/js/bootstrap.min.js"></script>
     </head>
     <body>

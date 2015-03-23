@@ -53,7 +53,7 @@
         <title>Slate: Writer</title>
         <link rel="stylesheet" href="./css/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/stylesheet_1.css">
-        <script src="/js/jquery.js"></script>
+        <script src="./js/jquery.js"></script>
         <script src="./css/dist/js/bootstrap.min.js"></script>
         <script src="./js/script_1.js"></script>
         <script src="./epiceditor/js/epiceditor.min.js"></script>
@@ -65,7 +65,7 @@
         <div class="writer-bottom-menu">
             <div class="pull-left">
                 <div class="btn-group">
-                    <button id="save" onclick="savePost()" class="btn btn-success">Save</button>
+                    <button id="save" class="btn btn-success">Save</button>
                     <button id="preview" class="btn btn-default">Toggle Preview</button>
                     <button id="clear" class="btn btn-default">Clear</button>
                     <button id="full" class="btn btn-default">Full Screen</button>
@@ -90,7 +90,7 @@
                         <form id="save" role="form">
                             <input type="text" id="title"
                                    class="form-control" placeholder="Title" value="<?php echo $title;?>"/>
-                            <textarea disabled="disabled" id="text" name="post" style="display: none"><?php echo $content;?></textarea>
+                            <textarea disabled="disabled" id="text" name="post" style=""><?php echo $content;?></textarea>
                             <input type="hidden" id="uid" value="<?php echo $uid;?>" />
                             <input type="hidden" id="pid" value="<?php echo $pid;?>" />
                         </form>

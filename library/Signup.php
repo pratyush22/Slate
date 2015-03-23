@@ -24,7 +24,7 @@
             $this->password = "";
             $this->confirm_password = "";
             $this->error = "";
-            $this->initial_image = "images/Icon-user.png";
+            $this->initial_image = "./images/Icon-user.png";
         }
         
         /**

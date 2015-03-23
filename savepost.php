@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $pid = $_POST["pid"];
     $uid = $_POST["uid"];
     
+    echo "Content Length before writing: ".strlen($content)."\n";
+    
     try
     {
         $db = new DatabaseConnection();
@@ -24,8 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         
         $path = "./data/".$uid."/".$pid."/post.md" or die("Unable to open");
         $file = fopen($path, "w");
-        fwrite($file, $content);
+        fputs($file, $content);
         fclose($file);
+        echo "Content length after writing: ".strlen($content);
     }
     catch (PDOException $ex)
     {

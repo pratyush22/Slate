@@ -21,7 +21,7 @@ $user->set_min_details($uid);
         <title>Slate: Viewer</title>
         <link rel="stylesheet" href="./css/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/stylesheet_1.css">
-        <script src="/js/jquery.js"></script>
+        <script src="./js/jquery.js"></script>
         <script src="./css/dist/js/bootstrap.min.js"></script>
         <script src="./js/script_1.js"></script>
         <script src="./epiceditor/js/epiceditor.min.js"></script>

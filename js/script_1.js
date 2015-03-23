@@ -50,7 +50,7 @@ function getEpicEditorForWriting() {
         container: "epiceditor",
         textarea: 'text',
         basePath: "epiceditor",
-        clientSideStorage: false,
+        clientSideStorage: true,
         localStorageName: "epiceditor",
         useNativeFullScreen: true,
         parser: marked,
@@ -85,6 +85,14 @@ function getEpicEditorForWriting() {
     };
     
     editor = new EpicEditor(options);
+    
+    //  Save button functionality
+    var saveBtn = document.getElementById("save");
+    if (saveBtn != null) {
+        saveBtn.onclick = function () {
+            savePost(editor);
+        };
+    }
     
     var previewButton = document.getElementById("preview");
     previewButton.onclick = function() {
@@ -188,11 +196,12 @@ function deletePost(id) {
 /**
  * Function to save the post
  */
-function savePost() {
+function savePost(editor) {
     var title = document.getElementById("title").value;
     title = title.trim();
     
-    var content = document.getElementById("text").value;
+    //var content = document.getElementById("text").value;
+    var content = editor.exportFile();
     content = content.trim();
     
     if (content.length > 5000)
@@ -282,7 +291,7 @@ function loadEpicEditor() {
         container: "epiceditor",
         textarea: 'text',
         basePath: "epiceditor",
-        clientSideStorage: false,
+        clientSideStorage: true,
         localStorageName: "epiceditor",
         useNativeFullScreen: false,
         parser: marked,

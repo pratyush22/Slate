@@ -290,10 +290,16 @@ class User extends Person
         
         try
         {
-            //  Delete the user image from the user's folder
-            if (strcmp($this->image, "images/Icon-user.png"))
+            //  If directory exists then delete it
+            if (file_exists("./data/".$this->id))
             {
                 $this->delete_directory("./data/".$this->id);
+            }
+                
+                
+            //  Delete the user image from the user's folder
+            if (strcmp($this->image, "./images/Icon-user.png"))
+            {
                 if (!unlink($this->image))
                 {
                     $this->error = "Your account can't be deleted";
@@ -306,6 +312,12 @@ class User extends Person
             $connection = $db->get_connection();
             $statement = $connection->prepare($query);
             $statement->bindParam(":username", $this->username);
+            $statement->execute();
+            
+            //  Delete the posts with current user id from the database.
+            $query = "DELETE FROM post WHERE uid = :uid";
+            $statement = $connection->prepare($query);
+            $statement->bindParam(":uid", $this->id);
             $statement->execute();
             
             $statement = null;
