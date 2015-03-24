@@ -65,6 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $error = "";
     
     $imageFileType = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    $imageFileType = strtolower($imageFileType);
+    
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if ($check !== false)
     {

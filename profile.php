@@ -52,6 +52,7 @@
                 $target_file = $target_dir.$user->get_id();
                 $uploadOK = 1;
                 $image_file_type = pathinfo($_FILES["user_image"]["name"], PATHINFO_EXTENSION);
+                $image_file_type = strtolower($image_file_type);
                 
                 //  Check if image file is a actual image or fake image
                 $check = getimagesize($_FILES["user_image"]["tmp_name"]);
@@ -66,7 +67,7 @@
                 }
                 
                 //  Check file size (1MB)
-                if ($_FILES["user_image"]["size"] > 1000000)
+                if ($_FILES["user_image"]["size"] > 5000000)
                 {
                     $info_error = "File is too large (should be less than 1MB)";
                     $uploadOK = 0;

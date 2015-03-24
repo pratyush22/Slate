@@ -90,7 +90,7 @@
                         <form id="save" role="form">
                             <input type="text" id="title"
                                    class="form-control" placeholder="Title" value="<?php echo $title;?>"/>
-                            <textarea disabled="disabled" id="text" name="post" style=""><?php echo $content;?></textarea>
+                            <textarea disabled="disabled" id="text" name="post" style="display: none;"><?php echo $content;?></textarea>
                             <input type="hidden" id="uid" value="<?php echo $uid;?>" />
                             <input type="hidden" id="pid" value="<?php echo $pid;?>" />
                         </form>
