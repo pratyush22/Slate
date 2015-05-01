@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         $db = new DatabaseConnection();
         $connection = $db->get_connection();
         $statement = $connection->prepare($query);
-        $statement->bindParam(":qid", $qid);
+        $statement->bindParam(":qid", $_GET['qid']);
         $statement->execute();
         $result = $statement->fetchAll();
 
