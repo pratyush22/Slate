@@ -46,7 +46,7 @@
 .post-list {
     margin: 5px;
     padding: 10px;
-    border: solid 1px #AAA;
+    border-bottom: solid 1px #CCC;
     border-radius: 2px;
     background-color: white;
 }
@@ -82,4 +82,43 @@
     padding: 5px;
     border: 1px solid #AAA;
     border-radius: 5px;
+}
+
+.quest-block {
+    margin: 0px;
+    padding: 5px;
+    border-bottom: solid 1px #333;
+    padding-bottom: 0px;
+}
+
+.quest-title {
+    font-size: 2.5em;
+    color: #444;
+    margin: 0px;
+}
+
+.quest-description {
+    font-size: 1.25em;
+    margin: 0px;
+    margin-bottom: 15px;
+}
+
+.quest-info {
+    margin: 0px;
+}
+
+.answer-block {
+    margin: 0px;
+    padding: 0px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 5px;
+}
+
+.answer-text {
+    font-size: 1.5em;
+}
+
+.answer-info {
+    margin: 0px;
+    padding-left: 2px;
 }

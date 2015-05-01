@@ -372,3 +372,47 @@ function displayImages(pid, uid) {
     var url = "displayimages.php?pid=" + pid + "&uid=" + uid;
     xmlRequest("GET", url, displayBlock);
 }
+
+function viewDiscussionList() {
+    var element = document.getElementById("display-container");
+    xmlRequest("GET", "discussionlist.php", element);
+}
+
+function myDiscussions() {
+    var element = document.getElementById("display-container");
+    xmlRequest("GET", "mydiscussions.php", element);
+}
+
+function deleteDiscussion(id) {
+    if (confirm("Are you sure?")) {
+        xmlRequest("GET", "deletediscussion.php?qid=" + id);
+        myDiscussions();
+    }
+}
+
+function displayAnswers(qid) {
+    var element = document.getElementById("display-answers");
+    xmlRequest("GET", "displayanswers.php?qid=" + qid, element);
+}
+
+function writeAnswer() {
+    var ans = document.getElementById("ans").value;
+    ans = ans.trim();
+    var qid = document.getElementById("qid").value;
+    var name = document.getElementById("name").value;
+    
+    var string = "ans=" + ans + "&qid=" + qid + "&name=" + name;
+    
+    var xml = new XMLHttpRequest();
+    xml.open("POST", "saveanswer.php", true);
+    xml.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xml.send(string);
+    
+    xml.onreadystatechange = function() {
+        if (xml.readyState === 4 && xml.status === 200) {
+            
+        }
+    };
+    
+    displayAnswers(qid);
+}

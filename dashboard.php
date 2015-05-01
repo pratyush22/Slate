@@ -40,6 +40,9 @@
                 <button class="btn btn-default btn-block large-font-1-2" onclick="recentPosts()">Recent Posts</button>
                 <button class="btn btn-default btn-block large-font-1-2" onclick="redirect('new', 'writer.php')">New Post</button>
                 <button class="btn btn-default btn-block large-font-1-2" onclick="getMyPosts()">My Posts</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="redirect('new', 'newdiscussion.php')">New Discussion</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="viewDiscussionList()">View Discussions</button>
+                <button class="btn btn-default btn-block large-font-1-2" onclick="myDiscussions()">My Discussions</button>
             </div>
             
             <!-- Middle Column -->

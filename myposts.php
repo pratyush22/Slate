@@ -1,3 +1,8 @@
+<div>
+    <h2 class="text-info">My Posts</h2>
+    <hr />
+</div>
+
 <?php
 
 include "./library/autoload.php";

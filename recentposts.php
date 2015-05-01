@@ -1,3 +1,8 @@
+<div>
+    <h2 class="text-info">Recent Posts</h2>
+    <hr />
+</div>
+
 <?php
 
 include "./library/autoload.php";

@@ -8,3 +8,9 @@
 
 ## Query to create 'post' table
 `CREATE TABLE post(pid int NOT NULL AUTO_INCREMENT, uid int NOT NULL, title text, post text, likes int, state varchar(10), PRIMARY KEY(pid));`
+
+## Query to create 'quest' table
+`CREATE TABLE quest(qid int NOT NULL AUTO_INCREMENT, uid int NOT NULL, name varchar(50), question text, description text, PRIMARY KEY(qid));`
+
+## Query to create 'answer' table
+`CREATE TABLE answer(aid int NOT NULL AUTO_INCREMENT, qid int NOT NULL, name varchar(50), ans text, PRIMARY KEY(aid));`
