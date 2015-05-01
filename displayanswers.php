@@ -3,18 +3,21 @@
 include "./library/security.php";
 include "./library/autoload.php";
 
-$query = "SELECT * FROM answer ORDER BY aid DESC";
+$query = "SELECT * FROM answer WHERE qid = :qid ORDER BY aid DESC";
 
-try
+if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    $db = new DatabaseConnection();
-    $connection = $db->get_connection();
-    $statement = $connection->prepare($query);
-    $statement->execute();
-    $result = $statement->fetchAll();
-    
-    foreach ($result as $ans)
+    try
     {
+        $db = new DatabaseConnection();
+        $connection = $db->get_connection();
+        $statement = $connection->prepare($query);
+        $statement->bindParam(":qid", $qid);
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+        foreach ($result as $ans)
+        {
 ?>
 
 <div class="answer-block">
@@ -26,9 +29,10 @@ try
 <br />
 
 <?php
+        }
     }
-}
-catch (Exception $ex)
-{
-
+    catch (Exception $ex)
+    {
+        Logger::write_log("displayanswers.php", $ex->getMessage());
+    }
 }
